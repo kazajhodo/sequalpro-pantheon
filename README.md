@@ -10,3 +10,10 @@ my-pantheon-account-password
 
 First is terminus authentication. Your pantheon account email address.
 Second is your pantheon account password. This is passed to sequel pro, then sequel pro uses it to authenticate with the pantheon database.
+Third is to make sure the 'TEMPLATE' variable is correct within connect.sh.
+
+# Usage
+Make executable.
+Update the modifications listed above.
+
+./connect.sh @site.environment
