@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Props to Aaron Bauman for writing the original script!
+# https://gist.github.com/aaronbauman/f50cc691eb3ed60a358c
+
 # You has terminus?
 if ! type terminus >/dev/null 2>&1; then
   echo
