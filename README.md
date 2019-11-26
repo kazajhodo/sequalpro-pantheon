@@ -8,9 +8,11 @@ Within connect.sh be sure to replace the following literal strings with your own
 my-pantheon-accounts-email-address@my-domain.com
 my-pantheon-account-password
 
-First is terminus authentication. Your pantheon account email address.
-Second is your pantheon account password. This is passed to sequel pro, then sequel pro uses it to authenticate with the pantheon database.
-Third is to make sure the 'TEMPLATE' variable is correct within connect.sh.
+First is terminus authentication. Replace 'my-pantheon-accounts-email-address@my-domain.com' with your pantheon account email address.
+
+Second is your pantheon account password. Replace 'my-pantheon-account-password'.
+
+Third is to make sure the 'TEMPLATE' variable is correct.
 
 # Usage
 Make executable.
