@@ -1,5 +1,15 @@
 #!/bin/sh
 
+# You has terminus?
+if ! type terminus >/dev/null 2>&1; then
+  echo
+  echo 'You are missing the awesomeness.'
+  echo
+  echo 'Install Terminus to use this script.'
+  echo 'https://pantheon.io/docs/terminus/install'
+  exit 0
+fi
+
 # exit on any errors:
 set -e
 
@@ -10,11 +20,11 @@ then
 fi
 
 # Authenticate with Terminus
-terminus auth:login --email 'my-pantheon-accounts-email-address@my-domain.com'
+terminus auth:login --email 'my-pantheon-accounts-email-address@my-domain.com' # REPLACE
 
 # Path to pantheon.spf file.
 # Should be located within the same directory as this file.
-TEMPLATE="$HOME/Projects/pantheon-sqlpro/pantheon.spf"
+TEMPLATE="$HOME/Projects/pantheon-sqlpro/pantheon.spf" # REPLACE
 
 # Temporary write path.
 TMP_SPF='/tmp/tmp.spf'
@@ -35,7 +45,7 @@ USER=$(terminus connection:info ${1:1} --field=mysql_username)
 # SSH Creds
 SSH_HOST=$(terminus connection:info ${1:1} --field=sftp_host)
 SSH_USER=$(terminus connection:info ${1:1} --field=sftp_username)
-SSH_PASSWORD='my-pantheon-account-password' # This is only passed to sequal pro for use.
+SSH_PASSWORD='my-pantheon-account-password' # REPLACE
 SSH_PORT='2222'
 
 # Echo variables into template.
