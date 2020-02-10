@@ -1,21 +1,14 @@
-Pantheon's provided script for connecting to their databases with Sequel Pro no longer works.
+Pantheon's provided script for connecting to databases with Sequel Pro no longer works. https://pantheon.io/docs/mysql-access
 
-This is a working version based off of the original.
+This script is an updated/fixed version based off of the original.
 
-# Modify before use
-Within connect.sh be sure to replace the following literal strings with your own values:
 
-my-pantheon-accounts-email-address@my-domain.com
-my-pantheon-account-password
+# Items to modify before use
+At the top of the connect.sh file is a set of variables. Set these to use the script.
 
-First is terminus authentication. Replace 'my-pantheon-accounts-email-address@my-domain.com' with your pantheon account email address.
-
-Second is your pantheon account password. Replace 'my-pantheon-account-password'.
-
-Third is to make sure the 'TEMPLATE' variable is correct.
 
 # Usage
-Make executable.
-Update the modifications listed above.
+Make connect.sh executable, set an alias if you would like.
 
-./connect.sh @site.environment
+run from directory without alias: './connect.sh @site.environment'
+ex: /connect.sh @aaikow8.dev # Will connect to dev environment db

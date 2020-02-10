@@ -1,10 +1,17 @@
 #!/bin/sh
 
-# Props to Aaron Bauman for writing the original script!
+# Props to Aaron Bauman for writing the original script.
 # https://gist.github.com/aaronbauman/f50cc691eb3ed60a358c
 
+# Settings
+terminus='terminus'
+projects="$HOME/Projects"
+directoryName='sequelpro-pantheon'
+pantheonEmail='your-pantheon-email@domain.com'
+pantheonPassword='your-pantheon-password'
+
 # You has terminus?
-if ! type terminus >/dev/null 2>&1; then
+if ! type $terminus >/dev/null 2>&1; then
   echo
   echo 'You are missing the awesomeness.'
   echo
@@ -23,33 +30,45 @@ then
 fi
 
 # Authenticate with Terminus
-terminus auth:login --email 'my-pantheon-accounts-email-address@my-domain.com' # REPLACE
+$terminus auth:login --email $pantheonEmail
 
 # Path to pantheon.spf file.
 # Should be located within the same directory as this file.
-TEMPLATE="$HOME/Projects/pantheon-sqlpro/pantheon.spf" # REPLACE
+TEMPLATE="$projects/$directoryName/pantheon.spf"
 
 # Temporary write path.
 TMP_SPF='/tmp/tmp.spf'
 
 # Update aliases
-terminus aliases
+$terminus aliases
 
 
 # Set template variables.
 
 # Database Creds
-DATABASE=$(terminus connection:info ${1:1} --field=mysql_database)
-HOST=$(terminus connection:info ${1:1} --field=mysql_host)
-PORT=$(terminus connection:info ${1:1} --field=mysql_port)
-PASSWORD=$(terminus connection:info ${1:1} --field=mysql_password)
-USER=$(terminus connection:info ${1:1} --field=mysql_username)
+DATABASE=$($terminus connection:info ${1:1} --field=mysql_database)
+HOST=$($terminus connection:info ${1:1} --field=mysql_host)
+PORT=$($terminus connection:info ${1:1} --field=mysql_port)
+PASSWORD=$($terminus connection:info ${1:1} --field=mysql_password)
+USER=$($terminus connection:info ${1:1} --field=mysql_username)
 
 # SSH Creds
-SSH_HOST=$(terminus connection:info ${1:1} --field=sftp_host)
-SSH_USER=$(terminus connection:info ${1:1} --field=sftp_username)
-SSH_PASSWORD='my-pantheon-account-password' # REPLACE
+SSH_HOST=$($terminus connection:info ${1:1} --field=sftp_host)
+SSH_USER=$($terminus connection:info ${1:1} --field=sftp_username)
+SSH_PASSWORD=$pantheonPassword # REPLACE
 SSH_PORT='2222'
+
+# Pantheon dev/sandbox environments goto sleep when they are not visited.
+# Incase the environment is asleep, we wake it up with terminus.
+# Otherwise you will get a timeout error connecting to unvisited, not-live databases.
+if [[ $env != 'live' ]]; then
+  echo
+  echo 'Connecting, waking up environment.'
+  echo
+  $terminus env:wake ${1:1}
+fi
+
+# $terminus env:wake 
 
 # Echo variables into template.
 
