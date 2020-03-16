@@ -7,8 +7,8 @@
 terminus='terminus'
 projects="$HOME/Projects"
 directoryName='sequelpro-pantheon'
-pantheonEmail='your-pantheon-email@domain.com'
-pantheonPassword='your-pantheon-password'
+pantheonEmail='acornell@augustash.com'
+pantheonPassword='RebelForce1'
 
 # You has terminus?
 if ! type $terminus >/dev/null 2>&1; then
@@ -19,9 +19,6 @@ if ! type $terminus >/dev/null 2>&1; then
   echo 'https://pantheon.io/docs/terminus/install'
   exit 0
 fi
-
-# exit on any errors:
-set -e
 
 if [ $# -lt 1 ]
 then
@@ -42,9 +39,6 @@ TMP_SPF='/tmp/tmp.spf'
 # Update aliases
 $terminus aliases
 
-
-# Set template variables.
-
 # Database Creds
 DATABASE=$($terminus connection:info ${1:1} --field=mysql_database)
 HOST=$($terminus connection:info ${1:1} --field=mysql_host)
@@ -55,10 +49,10 @@ USER=$($terminus connection:info ${1:1} --field=mysql_username)
 # SSH Creds
 SSH_HOST=$($terminus connection:info ${1:1} --field=sftp_host)
 SSH_USER=$($terminus connection:info ${1:1} --field=sftp_username)
-SSH_PASSWORD=$pantheonPassword # REPLACE
+SSH_PASSWORD=$pantheonPassword
 SSH_PORT='2222'
 
-# Pantheon dev/sandbox environments goto sleep when they are not visited.
+# Pantheon sandbox/dev/test environments goto sleep when they are not visited.
 # Incase the environment is asleep, we wake it up with terminus.
 # Otherwise you will get a timeout error connecting to unvisited, not-live databases.
 if [[ $env != 'live' ]]; then
@@ -68,8 +62,6 @@ if [[ $env != 'live' ]]; then
   $terminus env:wake ${1:1}
 fi
 
-# $terminus env:wake 
-
 # Echo variables into template.
 
 # This is for Sequel Pro:
@@ -78,5 +70,4 @@ eval "echo \"$(< $TEMPLATE)\""
 # flag compared to opening a file from file system. So, we write to a tmp file.
 eval "echo \"$(< $TEMPLATE)\"" > $TMP_SPF
 
-# Swap this out to fit your system:
 open $TMP_SPF
