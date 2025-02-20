@@ -7,8 +7,8 @@
 terminus='terminus'
 projects="$HOME/Projects"
 directoryName='sequelpro-pantheon'
-pantheonEmail='acornell@augustash.com'
-pantheonPassword='RebelForce1'
+pantheonEmail='email@pantheonemailaddress.com'
+pantheonPassword=''
 
 # You has terminus?
 if ! type $terminus >/dev/null 2>&1; then
